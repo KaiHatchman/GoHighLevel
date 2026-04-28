@@ -1,0 +1,1 @@
+const { ApiClient } = require('@gohighlevel/api-client');\n\n// Initialize the GoHighLevel API client\n// const client = new ApiClient({ apiKey: 'YOUR_API_KEY' });\n\nmodule.exports = {};\n
