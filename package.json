@@ -1,0 +1,1 @@
+{\n  \"name\": \"gohighlevel\",\n  \"version\": \"1.0.0\",\n  \"description\": \"GoHighLevel API client integration\",\n  \"main\": \"index.js\",\n  \"scripts\": {\n    \"start\": \"node index.js\"\n  },\n  \"dependencies\": {\n    \"@gohighlevel/api-client\": \"latest\"\n  }\n}\n
