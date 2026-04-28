@@ -52,22 +52,74 @@ Company facts only. No operational or campaign data.
 
 ## campaigns
 
-*(in progress)*
+| Column | Type | Notes |
+|---|---|---|
+| `id` | uuid | Primary key |
+| `name` | text | |
+| `status` | text | draft, active, paused, completed |
+| `start_date` | date | |
+| `end_date` | date | |
+| `ghl_location_id` | text | GHL sub-account reference |
+| `created_by` | uuid | |
+| `created_at` | timestamptz | |
+| `updated_at` | timestamptz | |
 
 ---
 
 ## campaign_contacts
 
-*(in progress)*
+All campaign-specific state for a contact. One row per contact per campaign.
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | uuid | Primary key |
+| `campaign_id` | uuid | FK to campaigns |
+| `contact_id` | uuid | FK to contacts |
+| `ghl_opportunity_id` | text | GHL pipeline link |
+| `disposition` | text | No Contact, Open, Not Now, Meeting Booked, Closed, Bad Data |
+| `disposition_changed_at` | timestamptz | When disposition last changed |
+| `enrolled_at` | timestamptz | When contact was added to campaign |
+| `last_contacted_at` | timestamptz | Date of last call |
+| `created_at` | timestamptz | |
+| `updated_at` | timestamptz | |
 
 ---
 
 ## call_log
 
-*(in progress)*
+One row per call. Disposition is a snapshot taken at call time, updated if BDR changes it after.
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | uuid | Primary key |
+| `contact_id` | uuid | FK to contacts |
+| `campaign_id` | uuid | FK to campaigns |
+| `external_call_id` | text | GHL dedup key |
+| `caller_user_id` | text | GHL userId of BDR |
+| `call_started_at` | timestamptz | |
+| `call_ended_at` | timestamptz | |
+| `duration_seconds` | integer | |
+| `disposition` | text | Snapshot at call time, updated on Pipeline Stage Changed |
+| `transcript_raw` | text | |
+| `recording_url` | text | |
+| `created_at` | timestamptz | |
+| `updated_at` | timestamptz | |
 
 ---
 
 ## meetings
 
-*(in progress)*
+One row per Calendly booking. Matched to contact via phone number.
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | uuid | Primary key |
+| `contact_id` | uuid | FK to contacts - matched on phone |
+| `campaign_id` | uuid | FK to campaigns |
+| `calendly_event_id` | text | Calendly sync reference |
+| `calendly_event_type` | text | e.g. 30 min intro |
+| `scheduled_for` | timestamptz | |
+| `duration_minutes` | integer | |
+| `status` | text | scheduled, completed, cancelled, no-show |
+| `created_at` | timestamptz | |
+| `updated_at` | timestamptz | |
